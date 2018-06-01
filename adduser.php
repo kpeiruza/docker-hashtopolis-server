@@ -12,7 +12,6 @@ require_once(dirname(__FILE__) . "/../inc/load.php");
     $username = "H8_USER";
     $password = "H8_PASS";
     $email = "H8_EMAIL";
-    $repeat = $password;
     
     if ($FACTORIES::getUserFactory()->getDB(true) === null) {
       //connection not valid

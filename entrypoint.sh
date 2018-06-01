@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+function getRandom() {
+	dd if=/dev/urandom bs=32768 count=1 2>/dev/null | openssl sha512  | grep stdin | cut -d " " -f2 | cut -c1-64
+}
+
 if [ -z "$MYSQL_HOST" ]
 then
 	MYSQL_HOST="mysql"
@@ -61,16 +66,17 @@ then
 #	CREATE USER & PASSWORD
 	if [ -z "$H8_USER" ]
 	then
-		echo "No login/password provided, using admin/admin"
-		H8_USER="admin"
-		H8_PASS="admin"
+
+		H8_USER=getRandom()
+		echo -e "No login provided, your admin account will be: $H8_USER\nIf you don't like it, check the docs first, this is for your own security."
 	fi
 
 	if [ -z "$H8_PASS" ]
 	then
-		echo "Please, provide H8_USER & H8_PASS or leave both unsetted to use admin/admin"
-		exit 11
+		H8_PASS=getRandom()
+		echo "No password provided for the administrative account. Your password is: $H8_PASS"
 	fi
+
 	sed -i "s/H8_USER/$H8_USER/" adduser.php
 	sed -i "s/H8_PASS/$H8_PASS/" adduser.php
 	sed -i "s/H8_EMAIL/$H8_EMAIL/" adduser.php
