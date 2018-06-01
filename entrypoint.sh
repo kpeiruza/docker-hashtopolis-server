@@ -59,29 +59,26 @@ then
 	sed -i "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" db.php
 	sed -i "s/MYSQL_DB/$MYSQL_DB/" db.php
 	sed -i "s/MYSQL_HOST/$MYSQL_HOST/" db.php
-	sed -i "s/MYSQL_PORT/$MYSQL_PORT/" db.php
+#	sed -i "s/MYSQL_PORT/$MYSQL_PORT/" db.php
 	sed -i "s/PENDING/true/" db.php
-	cd ../install || echo "Failed cd"
 	/usr/bin/php setup.php
 #	CREATE USER & PASSWORD
 	if [ -z "$H8_USER" ]
 	then
 
-		H8_USER=getRandom()
+		H8_USER=$(getRandom)
 		echo -e "No login provided, your admin account will be: $H8_USER\nIf you don't like it, check the docs first, this is for your own security."
 	fi
 
 	if [ -z "$H8_PASS" ]
 	then
-		H8_PASS=getRandom()
+		H8_PASS=$(getRandom)
 		echo "No password provided for the administrative account. Your password is: $H8_PASS"
 	fi
 
-	sed -i "s/H8_USER/$H8_USER/" adduser.php
-	sed -i "s/H8_PASS/$H8_PASS/" adduser.php
-	sed -i "s/H8_EMAIL/$H8_EMAIL/" adduser.php
+	sed -i -e "s/H8_USER/$H8_USER/" -e  "s/H8_PASS/$H8_PASS/" -e "s/H8_EMAIL/$H8_EMAIL/" /var/www/html/install/adduser.php
 
-	/usr/bin/php adduser.php
+	/usr/bin/php /var/www/html/install/adduser.php
 	echo "Setup finished, pruning /install folder"
 	rm -rf /var/www/html/install
 fi
