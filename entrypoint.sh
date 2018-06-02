@@ -1,18 +1,13 @@
 #!/bin/bash
 
 #	Try to connect to mysql 3 times
-ATTEMPTS=3
+ATTEMPTS=12
 #	Wait 5 secconds before trying to reconnect
 INTERVAL=5
 
 function getRandom() {
 	dd if=/dev/urandom bs=32768 count=1 2>/dev/null | openssl sha512  | grep stdin | cut -d " " -f2 | cut -c1-64
 }
-
-if [ -n "$MYSQL_ENV_MYSQL_RANDOM_ROOT_PASSWORD" ]
-then
-	MYSQL_ROOT_PASSWORD="$MYSQL_ENV_MYSQL_RANDOM_ROOT_PASSWORD"
-fi
 
 if [ -n "$MYSQL_ENV_MYSQL_ROOT_PASSWORD" ]
 then
@@ -65,6 +60,7 @@ then
 #	CHECK MYSQL AVAILABILITY
 	MYSQL="mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST $MYSQL_DB"
 	$MYSQL -e "SELECT 'PING';" &>/dev/null
+		echo "Used: $MYSQL"
 	ERROR=$?
 
 	while [ $ERROR -ne 0 -a $ATTEMPTS -gt 1 ]
@@ -80,7 +76,7 @@ then
 	then
 		echo "Could not connect to mysql. Please double check your settings and mysql's availability."
 		echo "Used: $MYSQL"
-		exit 20
+#		exit 20
 	fi
 
 #	CREATE DB
@@ -100,7 +96,7 @@ then
 #	CONFIGURE DB
 #	RUN SETUP & ADD USER
 sed -i -e "s/MYSQL_USER/$MYSQL_USER/" -e "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" -e "s/MYSQL_DB/$MYSQL_DB/" -e "s/MYSQL_HOST/$MYSQL_HOST/" -e "s/PENDING/true/" /var/www/html/inc/db.php || exit 8
-#	-e "s/MYSQL_PORT/$MYSQL_PORT/"  <--- fails and I don't get why???
+#	-e "s/MYSQL_PORT/$MYSQL_PORT/"  <--- fails and I don't get why...
 /usr/bin/php /var/www/html/install/setup.php
 #	CREATE USER & PASSWORD
 if [ -z "$H8_USER" ]
@@ -119,6 +115,26 @@ fi
 sed -i -e "s/H8_USER/$H8_USER/" -e  "s/H8_PASS/$H8_PASS/" -e "s/H8_EMAIL/$H8_EMAIL/" /var/www/html/install/adduser.php
 
 /usr/bin/php /var/www/html/install/adduser.php
+
+#	PHP MAIL SETTINGS
+if [ -n "$PHP_MAIL_HOST" ]
+then
+	sed -i "s/^SMTP.*/SMTP = $PHP_MAIL_HOST/" /etc/php/7.0/apache2/php.ini
+fi
+
+
+if [ -n "$PHP_MAIL_PORT" ]
+then
+	sed -i "s/^smtp_port.*/smtp_port = $PHP_MAIL_PORT/" /etc/php/7.0/apache2/php.ini
+fi
+
+
+if [ -n "$PHP_MAIL_FROM" ]
+then
+	sed -i "s/^;sendmail_from.*/sendmail_from = $PHP_MAIL_FROM/" /etc/php/7.0/apache2/php.ini
+fi
+
+
 echo "Setup finished, pruning /install folder"
 	rm -rf /var/www/html/install
 fi
