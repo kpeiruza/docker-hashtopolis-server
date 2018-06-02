@@ -99,28 +99,27 @@ then
 	fi
 #	CONFIGURE DB
 #	RUN SETUP & ADD USER
-	cd /var/www/html/inc || echo "Failed cd"
-	sed -i -e "s/MYSQL_USER/$MYSQL_USER/" -e "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" -e "s/MYSQL_DB/$MYSQL_DB/" -e "s/MYSQL_HOST/$MYSQL_HOST/" -e "s/PENDING/true/" db.php || exit 8
+sed -i -e "s/MYSQL_USER/$MYSQL_USER/" -e "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" -e "s/MYSQL_DB/$MYSQL_DB/" -e "s/MYSQL_HOST/$MYSQL_HOST/" -e "s/PENDING/true/" /var/www/html/inc/db.php || exit 8
 #	-e "s/MYSQL_PORT/$MYSQL_PORT/"  <--- fails and I don't get why???
-	/usr/bin/php /var/www/html/install/setup.php
+/usr/bin/php /var/www/html/install/setup.php
 #	CREATE USER & PASSWORD
-	if [ -z "$H8_USER" ]
-	then
+if [ -z "$H8_USER" ]
+then
 
-		H8_USER=$(getRandom)
-		echo -e "No login provided, generating random username:\n\t$H8_USER\n\nIf you don't like it, check the docs first, this is for your own security. admin/admin on a cracking tool sounds a bit funny.\n"
-	fi
+	H8_USER=$(getRandom)
+	echo -e "No login provided, generating random username:\n\t$H8_USER\n\nIf you don't like it, check the docs first, this is for your own security. admin/admin on a cracking tool sounds a bit funny.\n"
+fi
 
-	if [ -z "$H8_PASS" ]
-	then
-		H8_PASS=$(getRandom)
-		echo -e "Your random password is: $H8_PASS\n\n\n"
-	fi
+if [ -z "$H8_PASS" ]
+then
+	H8_PASS=$(getRandom)
+	echo -e "Your random password is: $H8_PASS\n\n\n"
+fi
 
-	sed -i -e "s/H8_USER/$H8_USER/" -e  "s/H8_PASS/$H8_PASS/" -e "s/H8_EMAIL/$H8_EMAIL/" /var/www/html/install/adduser.php
+sed -i -e "s/H8_USER/$H8_USER/" -e  "s/H8_PASS/$H8_PASS/" -e "s/H8_EMAIL/$H8_EMAIL/" /var/www/html/install/adduser.php
 
-	/usr/bin/php /var/www/html/install/adduser.php
-	echo "Setup finished, pruning /install folder"
+/usr/bin/php /var/www/html/install/adduser.php
+echo "Setup finished, pruning /install folder"
 	rm -rf /var/www/html/install
 fi
 
