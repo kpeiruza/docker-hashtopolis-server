@@ -24,12 +24,12 @@ Supported environment configuration variables:
 
 
 
-__Remember to map Hashtopolis /var/www/html to a persistent volume, as well as mysql's /var/lib/mysql for usage in production.__
+__Remember to map mysql's /var/lib/mysql for usage in production. Hashtopolis server's upload folders should be mapped as well.__
 - *docker run --name mysql -v ./mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw  -d mysql:5.7*
 - *docker run -v ./hashtopolis:/var/www/html -e MYSQL_ROOT_PASSWORD=my-secret-pw -e H8_USER="admin" -e H8_PASS="admin" -e H8_EMAIL="youremail@example.com" --link mysql:mysql -d -p 80:80 kpeiruza/hashtopolis*
 
 
-Please provide feedback about any trouble encountered as well as your success deploying a farm ofthousands of nodes :-)
+Please provide feedback about any trouble encountered as well as your success deploying a farm of thousands of nodes :-)
 
 Enjoy it!
 
