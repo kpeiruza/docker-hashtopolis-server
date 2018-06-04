@@ -58,9 +58,8 @@ fi
 if grep "PENDING" /var/www/html/inc/db.php &>/dev/null
 then
 #	CHECK MYSQL AVAILABILITY
-	MYSQL="mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST $MYSQL_DB"
+	MYSQL="mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST"
 	$MYSQL -e "SELECT 'PING';" &>/dev/null
-		echo "Used: $MYSQL"
 	ERROR=$?
 
 	while [ $ERROR -ne 0 -a $ATTEMPTS -gt 1 ]
@@ -76,11 +75,13 @@ then
 	then
 		echo "Could not connect to mysql. Please double check your settings and mysql's availability."
 		echo "Used: $MYSQL"
-#		exit 20
+		exit 20
 	fi
 
 #	CREATE DB
-	mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST -e "CREATE database $MYSQL_DB;"
+	$MYSQL -e "CREATE database $MYSQL_DB;"
+#	APPEND DB
+	MYSQL="$MYSQL $MYSQL_DB"
 	if [ $? -ne 0 ]
 	then
 		echo "Failed to create the database... insufficient access??? already exists??? this shouldn't happen, I'm doing setup..."
