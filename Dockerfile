@@ -1,8 +1,13 @@
-FROM debian:buster-slim
+FROM ubuntu:18.04
 MAINTAINER Kenneth Peiruza <kenneth@floss.cat>
-RUN	apt update && \
+
+RUN	export DEBIAN_FRONTEND=noninteractive && \
+	apt update && \
 	apt -y upgrade && \
-	apt install -y apache2 libapache2-mod-php php-mcrypt php-mysql php php-gd php-pear php-curl git pwgen mysql-client && \
+	apt -y install apache2 libapache2-mod-php php-mysql php php-gd php-pear php-curl git pwgen mariadb-client && \
+	apt -y install gcc make autoconf libc-dev pkg-config libmcrypt-dev php7.2-dev && \
+	pecl install mcrypt-1.0.1 && \
+	echo 'extension=mcrypt.so' >> /etc/php/7.2/apache2/php.ini && \
 	cd /var/www/ && \
 	rm -f html/index.html && \
 	git clone https://github.com/s3inlc/hashtopolis.git && \
