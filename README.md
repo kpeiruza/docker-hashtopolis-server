@@ -11,6 +11,9 @@ This is compatible with reading Docker Mysql environment variables, so you can e
 - *docker run --name mydb  -e MYSQL_ROOT_PASSWORD=PleaseChangeMe  -d mysql:5.7*
 - *docker run --link mydb:mysql -d -p 80:80 kpeiruza/hashtopolis*
 
+__*If you find problems using latest version of this Docker, please run "kpeiruza/hashtopolis:stable", which is based on php5 and Debian:9. This newer version is using PHP 7.2 on Ubuntu 18.04.*__
+
+
 Supported environment configuration variables:
 - __MYSQL_HOST__, defaults to *mysql*
 - __MYSQL_PORT__, defaults *3306* <-- *not working, fixed to 3306*
