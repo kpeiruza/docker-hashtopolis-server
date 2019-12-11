@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:buster-slim
 MAINTAINER Kenneth Peiruza <kenneth@floss.cat>
 RUN	apt update && \
 	apt -y upgrade && \
