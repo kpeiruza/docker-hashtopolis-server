@@ -14,5 +14,5 @@ $PEPPER = [
   "__CSRF__"
 ];
 
-$INSTALL = false; //set this to true if you config the mysql and setup manually
+$INSTALL = PENDING; //set this to true if you config the mysql and setup manually
 

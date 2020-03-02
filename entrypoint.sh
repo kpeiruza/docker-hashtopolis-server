@@ -55,7 +55,7 @@ then
 	MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
 fi
 
-if grep "PENDING" /var/www/html/inc/db.php &>/dev/null
+if grep "PENDING" /var/www/html/inc/conf.php &>/dev/null
 then
 #	CHECK MYSQL AVAILABILITY
 	MYSQL="mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST"
@@ -96,7 +96,7 @@ then
 	fi
 #	CONFIGURE DB
 #	RUN SETUP & ADD USER
-sed -i -e "s/MYSQL_USER/$MYSQL_USER/" -e "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" -e "s/MYSQL_DB/$MYSQL_DB/" -e "s/MYSQL_HOST/$MYSQL_HOST/" -e "s/PENDING/true/" /var/www/html/inc/db.php || exit 8
+sed -i -e "s/MYSQL_USER/$MYSQL_USER/" -e "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" -e "s/MYSQL_DB/$MYSQL_DB/" -e "s/MYSQL_HOST/$MYSQL_HOST/" -e "s/PENDING/true/" /var/www/html/inc/conf.php || exit 8
 #	-e "s/MYSQL_PORT/$MYSQL_PORT/"  <--- fails and I don't get why...
 #	CREATE USER & PASSWORD
 if [ -z "$H8_USER" ]
