@@ -98,7 +98,6 @@ then
 #	RUN SETUP & ADD USER
 sed -i -e "s/MYSQL_USER/$MYSQL_USER/" -e "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" -e "s/MYSQL_DB/$MYSQL_DB/" -e "s/MYSQL_HOST/$MYSQL_HOST/" -e "s/PENDING/true/" /var/www/html/inc/db.php || exit 8
 #	-e "s/MYSQL_PORT/$MYSQL_PORT/"  <--- fails and I don't get why...
-/usr/bin/php /var/www/html/install/setup.php
 #	CREATE USER & PASSWORD
 if [ -z "$H8_USER" ]
 then
