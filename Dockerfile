@@ -12,13 +12,15 @@ RUN	export DEBIAN_FRONTEND=noninteractive && \
 	rm -f html/index.html && \
 	git clone https://github.com/s3inlc/hashtopolis.git && \
 	mv hashtopolis/src/* html/ && \
+	mv /var/www/html/inc /var/www && \
+	mkdir /var/www/html/inc && \
 	chown -R www-data:www-data /var/www/html && \
 	ln -sf /dev/stdout /var/log/apache2/access.log && \
 	ln -sf /dev/sterr /var/log/apache2/error.log && \
 	echo "ServerName Hashtopolis" > /etc/apache2/conf-enabled/serverName.conf && \
 	rm -rf /var/lib/apt /var/lib/dpkg /var/cache/apt /usr/share/doc /usr/share/man /usr/share/info
 COPY	entrypoint.sh 	/
-COPY	conf.php /var/www/html/inc
+COPY	conf.php /var/www/
 COPY	adduser.php /var/www/html/install/
 
 EXPOSE 80
