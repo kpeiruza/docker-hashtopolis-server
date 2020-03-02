@@ -119,19 +119,19 @@ sed -i -e "s/H8_USER/$H8_USER/" -e  "s/H8_PASS/$H8_PASS/" -e "s/H8_EMAIL/$H8_EMA
 #	PHP MAIL SETTINGS
 if [ -n "$PHP_MAIL_HOST" ]
 then
-	sed -i "s/^SMTP.*/SMTP = $PHP_MAIL_HOST/" /etc/php/7.0/apache2/php.ini
+	sed -i "s/^SMTP.*/SMTP = $PHP_MAIL_HOST/" /etc/php/7.2/apache2/php.ini
 fi
 
 
 if [ -n "$PHP_MAIL_PORT" ]
 then
-	sed -i "s/^smtp_port.*/smtp_port = $PHP_MAIL_PORT/" /etc/php/7.0/apache2/php.ini
+	sed -i "s/^smtp_port.*/smtp_port = $PHP_MAIL_PORT/" /etc/php/7.2/apache2/php.ini
 fi
 
 
 if [ -n "$PHP_MAIL_FROM" ]
 then
-	sed -i "s/^;sendmail_from.*/sendmail_from = $PHP_MAIL_FROM/" /etc/php/7.0/apache2/php.ini
+	sed -i "s/^;sendmail_from.*/sendmail_from = $PHP_MAIL_FROM/" /etc/php/7.2/apache2/php.ini
 fi
 
 

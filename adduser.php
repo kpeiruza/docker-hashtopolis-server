@@ -29,7 +29,10 @@ require_once(dirname(__FILE__) . "/../inc/load.php");
         $group = Factory::getRightGroupFactory()->filter([Factory::FILTER => $qF]);
         $group = $group[0];
         $newSalt = Util::randomString(20);
-        $newHash = Encryption::passwordHash($password, $newSalt);
+        $CIPHER = $pepper[1] . $password . $newSalt;
+	$options = array('cost' => 12);
+	$newHash = password_hash($CIPHER, PASSWORD_BCRYPT, $options);
+
         $user = new User(null, $username, $email, $newHash, $newSalt, 1, 1, 0, time(), 3600, $group->getId(), 0, "", "", "", "");
         Factory::getUserFactory()->save($user);
         
