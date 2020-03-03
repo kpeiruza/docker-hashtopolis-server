@@ -11,7 +11,12 @@ This is compatible with reading Docker Mysql environment variables, so you can e
 - *docker run --name mydb  -e MYSQL_ROOT_PASSWORD=PleaseChangeMe  -d mysql:5.7*
 - *docker run --link mydb:mysql -d -p 80:80 kpeiruza/hashtopolis*
 
-__*If you find problems using latest version of this Docker, please run "kpeiruza/hashtopolis:stable", which is based on php5 and Debian:9. This newer version is using PHP 7.2 on Ubuntu 18.04.*__
+
+Or simply use the docker-compose.yaml: *docker-compose up -d*
+
+The compose deals with persistence on all levels: database, config, dictionaries ... If something isn't persisting, please, feel free to open an issue.
+
+__*If you find problems using latest version of this Docker, please run "kpeiruza/hashtopolis:stable", which is based on php5 and Debian:9 and has been working for ages. This newer "latest" version is using PHP 7.2 on Ubuntu 18.04.*__
 
 
 Supported environment configuration variables:
