@@ -23,6 +23,7 @@ services:
       - import:/var/www/html/import
       - files:/var/www/html/files
       - inc:/var/www/html/inc
+      - locks:/var/www/html/inc/utils/locks
     ports:
       - "8000:80"
 
@@ -30,4 +31,5 @@ volumes:
   import: {}
   files: {}
   inc: {}
+  locks: {}
   mysql: {}

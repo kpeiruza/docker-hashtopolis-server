@@ -14,6 +14,7 @@ RUN	export DEBIAN_FRONTEND=noninteractive && \
 	mv hashtopolis/src/* html/ && \
 	mv /var/www/html/inc /var/www && \
 	mkdir /var/www/html/inc && \
+	mkdir -p /var/www/html/inc/utils/locks && \
 	chown -R www-data:www-data /var/www/html && \
 	ln -sf /dev/stdout /var/log/apache2/access.log && \
 	ln -sf /dev/sterr /var/log/apache2/error.log && \
