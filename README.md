@@ -43,3 +43,42 @@ Please provide feedback about any trouble encountered as well as your success de
 
 Enjoy it!
 
+-------------------------
+Try it out as well with this docker-compose.yaml 
+
+``version: '3.7'
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: verySecret
+
+  hashtopolis:
+    image: kpeiruza/hashtopolis:latest
+    environment:
+      H8_USER: root
+      H8_PASS: verySecret
+      H8_EMAIL: root@localhost
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: verySecret
+      MYSQL_DB: hashtopolis
+    volumes:
+      - import:/var/www/html/import
+      - files:/var/www/html/files
+      - inc:/var/www/html/inc
+      - locks:/var/www/html/inc/utils/locks
+    ports:
+      - "8000:80"
+
+volumes:
+  import: {}
+  files: {}
+  inc: {}
+  locks: {}
+  mysql: {}
+  ``
