@@ -45,11 +45,11 @@ Enjoy it!
 
 -------------------------
 Try it out as well with this docker-compose.yaml 
-
-``version: '3.7'
+``
+version: '3.7'
 
 services:
-
+ 
   mysql:
     image: mysql:5.7
     volumes:
@@ -81,4 +81,5 @@ volumes:
   inc: {}
   locks: {}
   mysql: {}
-  ``
+
+``
