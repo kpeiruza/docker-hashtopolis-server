@@ -138,7 +138,7 @@ then
 fi
 
 
-echo "Setup finished, pruning /install folder"
+echo "Setup finished, pruning /install folder!"
 	rm -rf /var/www/html/install
 fi
 
