@@ -3,14 +3,17 @@ version: '3.7'
 services:
 
   mysql:
-    image: mysql:5.7
+    image: mariadb:5.5
     volumes:
-      - mysql:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: verySecret
 
   hashtopolis:
     image: kpeiruza/hashtopolis:latest
+#    image: htp:13  # use this if you built your own image using 'docker build ./Dockerfile -t htp:13
+    depends_on:
+      - mysql
     environment:
       H8_USER: root
       H8_PASS: verySecret
@@ -19,11 +22,14 @@ services:
       MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: verySecret
       MYSQL_DB: hashtopolis
+      HTP_SERVER_NAME: htp.example.com
+      HTP_MEMORY_LIMIT: 512M
+      HTP_UPLOAD_MAX_SIZE: 500M
     volumes:
-      - import:/var/www/html/import
-      - files:/var/www/html/files
-      - inc:/var/www/html/inc
-      - locks:/var/www/html/inc/utils/locks
+      - ./import:/var/www/html/import
+      - ./files:/var/www/html/files
+      - ./inc:/var/www/html/inc
+      - ./locks:/var/www/html/inc/utils/locks
     ports:
       - "8000:80"
 
