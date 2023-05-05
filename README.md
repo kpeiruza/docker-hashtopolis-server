@@ -23,6 +23,11 @@ docker build -t htp:latest
 ### Run it!
 Bring the whole thing up:
 ```
+docker compose up -d
+```
+or on older systems:
+
+```
 docker-compose up -d
 ```
 
@@ -61,7 +66,7 @@ This is a host where your database is hosted. Defaults to `mysql`.
 The port where `mysql` listens on. Defaults `3306` (<-- not working, fixed to 3306)
 
 #### `MYSQL_DB`
-The name of your database. Defaults to `Hashtopolis`.
+The name of your database. Defaults to `hashtopolis`.
 
 #### `MYSQL_ROOT_PASSWORD`
 This specifies the password that will be set for the MariaDB `root` superuser account. This should be the same value for your `hashtopolis` container.
