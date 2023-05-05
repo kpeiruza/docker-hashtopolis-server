@@ -142,4 +142,26 @@ echo "Setup finished, pruning /install folder!"
 	rm -rf /var/www/html/install
 fi
 
+#       HASHTOPOLIS FILE SETTINGS
+if [ -n "$HTP_MEMORY_LIMIT" ]
+then
+        sed -i "s/^memory_limit.*/memory_limit = $HTP_MEMORY_LIMIT/" /etc/php/7.2/apache2/php.ini
+fi
+
+
+if [ -n "$HTP_UPLOAD_MAX_SIZE" ]
+then
+        sed -i "s/^upload_max_filesize.*/upload_max_filesize = $HTP_UPLOAD_MAX_SIZE/" /etc/php/7.2/apache2/php.ini
+        sed -i "s/^post_max_size.*/post_max_size = $HTP_UPLOAD_MAX_SIZE/" /etc/php/7.2/apache2/php.ini
+fi
+
+#       ALLOW OVERRIDE ALL IN APACHE (AKA Enable .htaccess)
+sed -i '/DocumentRoot/a \\t<Directory /var/www/html>\n\t\tAllowOverride All\n\t</Directory>' /etc/apache2/sites-available/000-default.conf
+
+if [ -n "$HTP_SERVER_NAME" ]
+then
+        sed -i "s/#ServerName.*/ServerName $HTP_SERVER_NAME/" /etc/apache2/sites-available/000-default.conf
+fi
+
+
 /usr/sbin/apachectl -DFOREGROUND

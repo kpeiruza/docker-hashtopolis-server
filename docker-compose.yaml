@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   mysql:
-    image: mysql:5.7
+    image: mariadb:5.5
     volumes:
       - mysql:/var/lib/mysql
     environment:
@@ -11,6 +11,9 @@ services:
 
   hashtopolis:
     image: kpeiruza/hashtopolis:latest
+#    image: htp:latest  # use this if you built your own image using 'docker build <PATH_TO_DOCKERFILE> -t htp:latest
+    depends_on:
+      - mysql
     environment:
       H8_USER: root
       H8_PASS: verySecret
@@ -19,6 +22,9 @@ services:
       MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: verySecret
       MYSQL_DB: hashtopolis
+      HTP_SERVER_NAME: htp.example.com
+      HTP_MEMORY_LIMIT: 512M
+      HTP_UPLOAD_MAX_SIZE: 500M
     volumes:
       - import:/var/www/html/import
       - files:/var/www/html/files

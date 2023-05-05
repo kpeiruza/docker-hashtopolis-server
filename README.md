@@ -31,7 +31,10 @@ Supported environment configuration variables:
 - __H8_EMAIL__
 - __PHP_MAIL_HOST__, smtp server, defaults to php.ini
 - __PHP_MAIL_PORT__, smtp port, defaults to php.ini
-- __PHP_MAIL__FROM, defaults to php.ini
+- __PHP_MAIL_FROM__, defaults to php.ini
+- __HTP_MEMORY_LIMIT__, allows setting the memory limit on the server (default 128M)
+- __HTP_UPLOAD_MAX_SIZE__, sets the maximum allows upload file size (default 2M)
+- __HTP_SERVER_NAME__, sets a server (sub)domain name (default none)
 
 
 
