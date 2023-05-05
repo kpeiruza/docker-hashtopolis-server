@@ -16,11 +16,15 @@ Then, edit the `docker-compose.yaml` to fit your needs (using `nano`, `vi`, `vim
 
 ### Build the image (optional)
 Build the Hashtopolis image from scratch:
-`docker build -t htp:latest`
+```
+docker build -t htp:latest
+```
 
 ### Run it!
 Bring the whole thing up:
-`docker-compose up -d`
+```
+docker-compose up -d
+```
 
 This is the preferred method of running this, and includes volume persistence.
 
@@ -29,7 +33,9 @@ NOTE: the first time you run this, MariaDB will initialize its database. This ca
 ### Run it the hard(er) way!
 Run using individual `docker` commands:
 
-`docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=changemeRoot mariadb:10.11`
+```
+docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=changemeRoot mariadb:10.11
+```
 
 ```
 docker run -d \
