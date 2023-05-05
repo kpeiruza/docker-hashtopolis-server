@@ -5,13 +5,13 @@ services:
   mysql:
     image: mariadb:5.5
     volumes:
-      - ./mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: verySecret
 
   hashtopolis:
     image: kpeiruza/hashtopolis:latest
-#    image: htp:13  # use this if you built your own image using 'docker build ./Dockerfile -t htp:13
+#    image: htp:latest  # use this if you built your own image using 'docker build <PATH_TO_DOCKERFILE> -t htp:latest
     depends_on:
       - mysql
     environment:
@@ -26,10 +26,10 @@ services:
       HTP_MEMORY_LIMIT: 512M
       HTP_UPLOAD_MAX_SIZE: 500M
     volumes:
-      - ./import:/var/www/html/import
-      - ./files:/var/www/html/files
-      - ./inc:/var/www/html/inc
-      - ./locks:/var/www/html/inc/utils/locks
+      - import:/var/www/html/import
+      - files:/var/www/html/files
+      - inc:/var/www/html/inc
+      - locks:/var/www/html/inc/utils/locks
     ports:
       - "8000:80"
 
