@@ -3,24 +3,25 @@ version: '3.7'
 services:
 
   mysql:
-    image: mariadb:5.5
+    image: mariadb:10.11
     volumes:
       - mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: verySecret
+      MYSQL_ROOT_PASSWORD: changemeRoot
+    restart: unless-stopped
 
   hashtopolis:
     image: kpeiruza/hashtopolis:latest
-#    image: htp:latest  # use this if you built your own image using 'docker build <PATH_TO_DOCKERFILE> -t htp:latest
+#    image: htp:latest  # use this if you built your own image using 'docker build <PATH_TO_DOCKERFILE> -t htp:latest'
     depends_on:
       - mysql
     environment:
-      H8_USER: root
-      H8_PASS: verySecret
+      H8_USER: root  # This is the username you'll be logging into Hashtopolis with
+      H8_PASS: changemeHTPuser  # This is the password you'll be logging into Hashtopolis with
       H8_EMAIL: root@localhost
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
-      MYSQL_ROOT_PASSWORD: verySecret
+      MYSQL_ROOT_PASSWORD: changemeRoot  # This should be the same password defined for the 'mysql' container
       MYSQL_DB: hashtopolis
       HTP_SERVER_NAME: htp.example.com
       HTP_MEMORY_LIMIT: 512M
@@ -32,6 +33,7 @@ services:
       - locks:/var/www/html/inc/utils/locks
     ports:
       - "8000:80"
+    restart: unless-stopped
 
 volumes:
   import: {}
