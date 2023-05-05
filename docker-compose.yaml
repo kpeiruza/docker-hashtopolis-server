@@ -8,6 +8,7 @@ services:
       - mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: changeMe!root
+    restart: unless-stopped
 
   hashtopolis:
     image: kpeiruza/hashtopolis:latest
@@ -32,6 +33,7 @@ services:
       - locks:/var/www/html/inc/utils/locks
     ports:
       - "8000:80"
+    restart: unless-stopped
 
 volumes:
   import: {}
