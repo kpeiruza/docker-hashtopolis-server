@@ -44,7 +44,7 @@ docker run -d \
   kpeiruza/hashtopolis
 ```
 
-NOTE: `--link` has been deprecated, and may be removed from `docker` in the future. Additionally, these ocmmands do not deal with persistence. If you need this, you'll have to add it where necessary using the `-v` switch. 
+NOTE: `--link` has been deprecated, and may be removed from `docker` in the future. Additionally, these commands do not deal with persistence. If you need this, you'll have to add it where necessary using the `-v` switch. 
 
 ## ENVIRONMENT VARIABLES
 
